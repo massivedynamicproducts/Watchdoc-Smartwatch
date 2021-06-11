@@ -180,11 +180,6 @@ void setup() {
 
 void loop() {
 
-  
-//TODO: ADD COUGHDETECTION FUNCTION IN THE MAIN MENU(INSIDE LOOP while( if not health_app or self_checker ) display 2 app logos 
-//Maybe use buzzer when temp. high????
-
-
 
 
 
@@ -207,21 +202,6 @@ void loop() {
   Serial.print("Self Checker. \n " );
   arcada.display->fillScreen(ARCADA_BLACK);
 
-     /* 
-        // Display Welcome Self Checker
-        GFXcanvas16 *canvas2 = arcada.getCanvas();
-        uint16_t *buffer2 = canvas2->getBuffer();
-        for (int h=0; h<240; h++) {
-          for (int w=0; w<SELF_CHECK_HEIGHT; w++) {
-            buffer2[h*SELF_CHECK_HEIGHT + w] = self_check_logo[h*SELF_CHECK_HEIGHT + w];
-          }
-        } 
-      
-        //captured frame's starting x,y coordinates anywhere on screen
-        arcada.blitFrameBuffer(0, 0);
-
-        delay(1000);
-*/
    arcada.display->fillScreen(ARCADA_BLACK);
 
    
@@ -368,7 +348,7 @@ void loop() {
           arcada.display->setTextSize(3);
           arcada.display->print(question_no);
         }
-    //Cough_Detection(); cough detection delays of microphone makes this wait the whole self checker app , get rid of delays if possible, if not dont use here
+    
         
         if ( question_no == 0 )
         {
@@ -654,17 +634,17 @@ void onPDMdata() {
 void Cough_Detection()
 {
   
-  // Sesin Eşik Değeri Aşmasını Bekle
+
   if (rms > SAMPLE_THRESHOLD)
   {
-    //  Aşınca turuncu led on & Sampling Start
+
     digitalWrite(LED_BUILTIN, HIGH);
     for (int i = 0; i < FEATURE_SIZE; i++) {  // sampling
       while (rms < 0);
       feature_data[i] = rms;  
       delay(SAMPLE_DELAY);
     }
-    digitalWrite(LED_BUILTIN, LOW); //Sampling Bitince Led Off
+    digitalWrite(LED_BUILTIN, LOW); //Sampling
   
     // predict voice and put results (probability) for each label in the array
     float prediction[NUMBER_OF_LABELS];
